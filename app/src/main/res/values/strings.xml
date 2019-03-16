@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">UniPlan2</string>
+    <string name="task_name">Task Name</string>
+    <string name="task_name_view">Task Name:</string>
+    <string name="class_view">Class:</string>
+    <string name="description">Notes:</string>
+    <string name="due_date">Due Date:</string>
+    <string name="task_day">Day</string>
+    <string name="task_month">Month</string>
+    <string name="task_year">Year</string>
+    <string name="optional">Optional</string>
+
+    <string-array name="dayOfWeek">
+        <item>   </item>
+        <item>Sun</item>
+        <item>Mon</item>
+        <item>Tues</item>
+        <item>Wed</item>
+        <item>Thur</item>
+        <item>Fri</item>
+        <item>Sat</item>
+    </string-array>
+</resources>
