@@ -8,7 +8,7 @@ import android.arch.persistence.room.PrimaryKey;
 import java.util.Date;
 import java.util.jar.Attributes;
 
-@Entity(tableName = "tasks")
+@Entity(tableName = "task")
 public class Task {
     @PrimaryKey
     public int tid;
