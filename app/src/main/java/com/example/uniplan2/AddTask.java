@@ -1,6 +1,7 @@
 package com.example.uniplan2;
 
 import android.app.DatePickerDialog;
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -14,32 +15,57 @@ import android.widget.Spinner;
 import android.widget.DatePicker;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class AddTask extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnDatePicker;
-    EditText txtDate;
+    public Button btnDatePicker;
+    public EditText txtDate;
     private int mYear, mMonth, mDay;
+
+    //Values to store in task table
+    public String taskName;
+    public String notes;
+    public int id;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
-        btnDatePicker=(Button)findViewById(R.id.dateButton);
-        txtDate=(EditText)findViewById(R.id.dueDateEdit);
+        final EditText taskNameEditText =  findViewById(R.id.taskNameEditText);
+        final EditText taskDescriptionEditText =  findViewById(R.id.taskDescriptionEditText);
+
+
+        btnDatePicker=findViewById(R.id.dateButton);
+        txtDate=findViewById(R.id.dueDateEdit);
 
         btnDatePicker.setOnClickListener(this);
 
-
+    //~~~~~~~~~~~~~Once the done button is clicked~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         FloatingActionButton addTaskDoneButton = findViewById(R.id.addTaskDoneButton);
         addTaskDoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                taskName = taskNameEditText.getText().toString();
+                notes = taskDescriptionEditText.getText().toString();
+
                 Intent i = new Intent(getBaseContext(), MainActivity.class );
+                i.putExtra("taskName", taskName);
+                i.putExtra("notes", notes);
+                i.putExtra("day", mDay);
+                i.putExtra("month", mMonth);
+                i.putExtra("year", mYear);
+
                 startActivity(i);
+
+
             }
         });
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     }
 
     @Override
