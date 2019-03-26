@@ -32,8 +32,8 @@ public class Class {
     public String color;
 
     //Day 1 Start
-    @ColumnInfo(name = "day1S")
-    public Date day1S;
+    //@ColumnInfo(name = "day1S")
+    //public Date day1S;
 
     //Day 1 End
     @ColumnInfo(name = "day1E")

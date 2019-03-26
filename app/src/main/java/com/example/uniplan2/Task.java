@@ -23,7 +23,7 @@ public class Task {
     public String notes;
 
     @ColumnInfo(name = "date")
-    public Date date;
+    public String date;
 
     public String displayTask(){
         String str = name + "\n" + notes;

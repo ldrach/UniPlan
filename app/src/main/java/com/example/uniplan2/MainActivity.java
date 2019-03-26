@@ -42,12 +42,9 @@ import java.util.Date;
         if(taskCount>0){
             for (int i = 0; i<taskCount; i++) {
                 Task currentTask = db.taskDao().findTask(i);
-                Date currentDate = currentTask.date;
-                int currentDay = currentDate.getDay();
-                int currentMonth = currentDate.getMonth();
-                int currentYear = currentDate.getYear();
+                String currentDate = currentTask.date;
 
-                taskDates[i] = " " + currentDay + " / " + currentMonth + " / " + currentYear;
+                taskDates[i] = currentDate;
             }
         }
 
@@ -86,7 +83,10 @@ import java.util.Date;
         task.name = intent.getStringExtra("name");
         task.id = taskCount+1;
         task.notes = intent.getStringExtra("notes");
-        task.date = new Date(intent.getIntExtra("year", 0), intent.getIntExtra("month", 0), intent.getIntExtra("day", 0));
+        year = intent.getIntExtra("year", 0);
+        month = intent.getIntExtra("month", 0);
+        day = intent.getIntExtra("day", 0);
+        task.date = "" + day + "/" + month + "/" + year;
 
         db.taskDao().insert(task);
 
