@@ -20,9 +20,6 @@ import java.util.Date;
 
      public Database db;
      ListView taskListView;
-     //days array will be the first array which will organize the list items by their due date
-     ArrayAdapter<String> daysAdapter;
-     String[] days = {"Jan 30", "Feb 1", "Feb 2"};
 
      private String taskName;
      private String taskDescription;
@@ -33,11 +30,26 @@ import java.util.Date;
      private int month;
      private int year;
 
+     ArrayAdapter<String> tasksAdapter;
+     String[] taskDates;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        taskCount = 0;
+
+        if(taskCount>0){
+            for (int i = 0; i<taskCount; i++) {
+                Task currentTask = db.taskDao().findTask(i);
+                Date currentDate = currentTask.date;
+                int currentDay = currentDate.getDay();
+                int currentMonth = currentDate.getMonth();
+                int currentYear = currentDate.getYear();
+
+                taskDates[i] = " " + currentDay + " / " + currentMonth + " / " + currentYear;
+            }
+        }
 
         //Instance of room database implemented here~~~~~~~~~~~~~~~~~~~
         db = Room.databaseBuilder(getApplicationContext(),
@@ -79,8 +91,8 @@ import java.util.Date;
         db.taskDao().insert(task);
 
         taskListView = (ListView) findViewById(R.id.taskListView);
-        daysAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, days);
-        taskListView.setAdapter(daysAdapter);
+        tasksAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, taskDates);
+        taskListView.setAdapter(tasksAdapter);
 
     }
 

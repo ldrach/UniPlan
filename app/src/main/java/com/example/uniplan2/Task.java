@@ -25,6 +25,11 @@ public class Task {
     @ColumnInfo(name = "date")
     public Date date;
 
+    public String displayTask(){
+        String str = name + "\n" + notes;
+        return str;
+    }
+
 
 }
 
