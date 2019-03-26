@@ -19,11 +19,8 @@ public class Task {
     @ColumnInfo(name = "name")
     public String name;
 
-    @ColumnInfo(name = "classID")
-    public int classID;
-
-    @ColumnInfo(name = "description")
-    public int description;
+    @ColumnInfo(name = "notes")
+    public String notes;
 
     @ColumnInfo(name = "date")
     public Date date;
