@@ -2,6 +2,7 @@
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import java.util.Date;
      private int year;
 
      ArrayAdapter<String> tasksAdapter;
+     //Array of all dates for tasks with task info
      String[] taskDates;
 
 
@@ -39,6 +41,7 @@ import java.util.Date;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        taskDates = new String[100];
         if(taskCount>0){
             for (int i = 0; i<taskCount; i++) {
                 Task currentTask = db.taskDao().findTask(i);
@@ -48,15 +51,24 @@ import java.util.Date;
             }
         }
 
+
         //Instance of room database implemented here~~~~~~~~~~~~~~~~~~~
         db = Room.databaseBuilder(getApplicationContext(),
-                Database.class, "Database").build();
+                Database.class, "Database").allowMainThreadQueries().build();
 
 
         FloatingActionButton fab = findViewById(R.id.addBtn);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Creates a new array with 5 more spots and assigns it back to taskDates
+                if(taskCount>(taskDates.length-5)){
+                    String[] temp = new String[taskDates.length+5];
+                    for(int n=0;n<taskDates.length;n++){
+                        temp[n] = taskDates[n];
+                    }
+                    taskDates = temp;
+                }
                 Intent i = new Intent(MainActivity.this, AddTask.class);
 
                 startActivity(i);
@@ -88,6 +100,7 @@ import java.util.Date;
         day = intent.getIntExtra("day", 0);
         task.date = "" + day + "/" + month + "/" + year;
 
+
         db.taskDao().insert(task);
 
         taskListView = (ListView) findViewById(R.id.taskListView);
@@ -95,6 +108,8 @@ import java.util.Date;
         taskListView.setAdapter(tasksAdapter);
 
     }
+
+
 
 
 }
