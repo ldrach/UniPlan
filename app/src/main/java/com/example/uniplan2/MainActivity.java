@@ -54,7 +54,7 @@ import java.util.Date;
 
         //Instance of room database implemented here~~~~~~~~~~~~~~~~~~~
         db = Room.databaseBuilder(getApplicationContext(),
-                Database.class, "Database").allowMainThreadQueries().build();
+                Database.class, "Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
 
         FloatingActionButton fab = findViewById(R.id.addBtn);
@@ -91,22 +91,25 @@ import java.util.Date;
 
         //Populating database with task data fields
 
-        Task task = new Task();
-        task.name = intent.getStringExtra("name");
-        task.id = taskCount+1;
-        task.notes = intent.getStringExtra("notes");
-        year = intent.getIntExtra("year", 0);
-        month = intent.getIntExtra("month", 0);
-        day = intent.getIntExtra("day", 0);
-        task.date = "" + day + "/" + month + "/" + year;
+        try {
+            Task task = new Task();
+            task.name = intent.getStringExtra("name");
+            task.id = taskCount + 1;
+            task.notes = intent.getStringExtra("notes");
+            year = intent.getIntExtra("year", 0);
+            month = intent.getIntExtra("month", 0);
+            day = intent.getIntExtra("day", 0);
+            task.date = "" + day + "/" + month + "/" + year;
 
 
-        db.taskDao().insert(task);
+            db.taskDao().insert(task);
 
-        taskListView = (ListView) findViewById(R.id.taskListView);
+
+
+        taskListView = findViewById(R.id.taskListView);
         tasksAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, taskDates);
-        taskListView.setAdapter(tasksAdapter);
-
+        //taskListView.setAdapter(tasksAdapter);
+        }catch(NullPointerException e){}
     }
 
 
