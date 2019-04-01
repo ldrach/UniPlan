@@ -10,6 +10,8 @@ import java.util.jar.Attributes;
 
 @Entity(tableName = "task")
 public class Task {
+
+    //Primary key needs to be set up properly
     @PrimaryKey
     public int tid;
 
