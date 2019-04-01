@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddClass"></activity>
+        <activity android:name=".calendar"></activity>
+        <activity android:name=".editClass" />
+        <activity android:name=".AddClass" />
         <activity android:name=".AddTask" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -19,5 +21,6 @@
             </intent-filter>
         </activity>
     </application>
+
 
 </manifest>
