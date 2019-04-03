@@ -1,6 +1,7 @@
 package com.example.uniplan2;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,7 +14,10 @@ public class calendar extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calender);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setContentView(R.layout.activity_calendar);
+
+        backBtn = findViewById(R.id.backButton);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override

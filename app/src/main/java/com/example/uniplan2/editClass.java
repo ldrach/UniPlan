@@ -1,13 +1,15 @@
 package com.example.uniplan2;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 public class editClass extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_edit_class);
     }
 }

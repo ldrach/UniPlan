@@ -1,18 +1,19 @@
 package com.example.uniplan2;
 
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
-import java.util.Calendar;
+
 import java.text.NumberFormat;
+import java.util.Calendar;
 
 
 public class AddClass extends AppCompatActivity implements View.OnClickListener{
@@ -25,6 +26,7 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_add_class);
 
         fromTimePicker1 = (EditText) findViewById(R.id.fromTimeEdit1);
