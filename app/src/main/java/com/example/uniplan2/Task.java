@@ -8,10 +8,14 @@ import android.arch.persistence.room.PrimaryKey;
 import java.util.Date;
 import java.util.jar.Attributes;
 
+import io.reactivex.annotations.NonNull;
+
 @Entity(tableName = "task")
 public class Task {
-    @PrimaryKey
-    public int tid;
+
+    //Primary key needs to be set up properly
+    @PrimaryKey(autoGenerate = true)
+
 
     @ColumnInfo(name = "id")
     public int id;
