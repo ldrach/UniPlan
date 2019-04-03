@@ -1,6 +1,7 @@
  package com.example.uniplan2;
 
  import android.content.Intent;
+ import android.content.pm.ActivityInfo;
  import android.os.Bundle;
  import android.support.design.widget.FloatingActionButton;
  import android.support.v7.app.AppCompatActivity;
@@ -39,6 +40,7 @@
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
 
          mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -182,7 +184,7 @@
              return true;
          }
 
-         if (id == R.id.action_menu) {
+         else if (id == R.id.action_menu) {
              //Show Menu here
              return true;
          }
