@@ -1,23 +1,16 @@
  package com.example.uniplan2;
 
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.persistence.room.Room;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TimePicker;
-import android.widget.DatePicker;
-import android.widget.Toast;
-
-
-import java.util.List;
-import java.util.Date;
+ import android.content.Intent;
+ import android.os.Bundle;
+ import android.support.design.widget.FloatingActionButton;
+ import android.support.v7.app.AppCompatActivity;
+ import android.support.v7.widget.Toolbar;
+ import android.view.Menu;
+ import android.view.MenuItem;
+ import android.view.View;
+ import android.widget.ArrayAdapter;
+ import android.widget.ListView;
+ import android.widget.Toast;
 
  public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +18,7 @@ import java.util.Date;
      public TaskDao taskDao;
      ListView taskListView;
      private tasksViewModel mViewModel;
+     private Toolbar mTopToolbar;
 
      private String taskName;
      private String taskDescription;
@@ -46,6 +40,9 @@ import java.util.Date;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+         mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+         setSupportActionBar(mTopToolbar);
 
         taskListView = findViewById(R.id.taskListView);
         taskCount = 0;
@@ -135,14 +132,14 @@ import java.util.Date;
             }
         });
 
-        Button addClassButton = findViewById(R.id.addClassBtn);
-        addClassButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, AddClass.class);
-                startActivity(i);
-            }
-        });
+//        Button addClassButton = findViewById(R.id.addClassBtn);
+//        addClassButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(MainActivity.this, AddClass.class);
+//                startActivity(i);
+//            }
+//        });
 
 
 
@@ -164,6 +161,40 @@ import java.util.Date;
         }
         return tasks;
     }
+
+     @Override
+     public boolean onCreateOptionsMenu(Menu menu) {
+         // Inflate the menu; this adds items to the action bar if it is present.
+         getMenuInflater().inflate(R.menu.menu_main, menu);
+         return true;
+     }
+
+     @Override
+     public boolean onOptionsItemSelected(MenuItem item) {
+         // Handle action bar item clicks here. The action bar will
+         // automatically handle clicks on the Home/Up button, so long
+         // as you specify a parent activity in AndroidManifest.xml.
+         int id = item.getItemId();
+
+         if (id == R.id.action_calendar) {
+             Intent i = new Intent(getBaseContext(), calendar.class);
+             startActivity(i);
+             return true;
+         }
+
+         if (id == R.id.action_menu) {
+             //Show Menu here
+             return true;
+         }
+
+         if (id == R.id.action_add) {
+             Intent i = new Intent(getBaseContext(), AddClass.class);
+             startActivity(i);
+             return true;
+         }
+
+         return super.onOptionsItemSelected(item);
+     }
 
 
 
