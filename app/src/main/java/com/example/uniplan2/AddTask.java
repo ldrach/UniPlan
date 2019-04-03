@@ -27,7 +27,7 @@ public class AddTask extends AppCompatActivity implements View.OnClickListener {
     public String taskName;
     public String notes;
     public int id;
-
+    private String taskAdded;
 
 
 
@@ -59,6 +59,10 @@ public class AddTask extends AppCompatActivity implements View.OnClickListener {
                 i.putExtra("day", mDay);
                 i.putExtra("month", mMonth);
                 i.putExtra("year", mYear);
+
+                taskAdded = "t";
+                i.putExtra("taskAdded", taskAdded);
+
 
                 startActivity(i);
 

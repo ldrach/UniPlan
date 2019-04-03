@@ -15,7 +15,7 @@ public interface TaskDao {
     @Query("SELECT * FROM task")
     List<Task> getAll();
 
-    @Query("SELECT * FROM task WHERE id LIKE :taskID")
+    @Query("SELECT * FROM task WHERE id = :taskID")
     Task findTask(int taskID);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -26,5 +26,8 @@ public interface TaskDao {
 
     @Delete
     void delete(Task task);
+
+    @Query("Delete FROM task")
+    void deleteAll();
 
 }
