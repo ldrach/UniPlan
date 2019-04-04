@@ -15,11 +15,10 @@ public abstract ClassDao classDao();
 public static Database getFileDatabase(Context context){
     if (INSTANCE == null){
         INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                Database.class, "UniPlanDatabase")
+                Database.class, "The Database")
                 .allowMainThreadQueries()
                 .fallbackToDestructiveMigration()
                 .build();
-
     }
     return INSTANCE;
 }
