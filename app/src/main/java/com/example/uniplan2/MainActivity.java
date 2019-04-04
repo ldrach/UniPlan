@@ -62,16 +62,18 @@ import java.util.Date;
         and instance of database here
          */
 
-
-
          //Instance of room database implemented here~~~~~~~~~~~~~~~~~~~
          db = Database.getFileDatabase(getApplicationContext());
          taskList = db.taskDao().getAll();
-
-
-         //Grasping at straws for a fix, can probably delete this line
-         //db.taskDao().deleteAll();
-
+/*
+         //Grasping at straws for a fix, this might have been it. Will come up with a better solution later
+         db.taskDao().deleteAll();
+         int current=0;
+         while(current<taskList.size()){
+             db.taskDao().insert(taskList.get(current));
+             current++;
+         }
+*/
          //If there are any tasks, updates task arrays with data
          if(taskList.size()>0) {
              updateTaskArrays();
@@ -101,18 +103,6 @@ import java.util.Date;
              //populates arrays after new task is added
              updateTaskArrays();
          }
-
-         Task a1 = generateTestTask();
-         Task a2 = generateTestTask();
-         Task a3 = generateTestTask();
-         a1.date = "a1";
-         a2.date = "a2";
-         a3.date = "a3";
-         db.taskDao().insert(a1);
-         db.taskDao().insert(a2);
-         db.taskDao().insert(a3);
-         taskList = db.taskDao().getAll();
-         taskCount = taskList.size();
 
          //populates arrays after new task is added
          updateTaskArrays();
