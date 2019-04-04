@@ -9,6 +9,8 @@
     <string name="task_month">Month</string>
     <string name="task_year">Year</string>
     <string name="optional">Optional</string>
+    <string name="agenda">Agenda</string>
+    <string name="back">Back</string>
 
     <string-array name="dayOfWeek">
         <item>   </item>
