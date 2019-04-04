@@ -523,5 +523,15 @@
         app:layout_constraintStart_toStartOf="@+id/guideline9"
         app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
+    <Button
+        android:id="@+id/colorButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Pick Color"
+        app:layout_constraintBottom_toTopOf="@+id/guideline10"
+        app:layout_constraintEnd_toStartOf="@+id/guideline8"
+        app:layout_constraintStart_toStartOf="@+id/guideline7"
+        app:layout_constraintTop_toTopOf="@+id/guideline11" />
+
 
 </android.support.constraint.ConstraintLayout>
