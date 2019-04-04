@@ -10,8 +10,11 @@
  import android.view.MenuItem;
  import android.view.View;
  import android.widget.ArrayAdapter;
+ import android.widget.Button;
  import android.widget.ListView;
  import android.widget.Toast;
+
+ import java.util.List;
 
  public class MainActivity extends AppCompatActivity {
 
@@ -19,11 +22,11 @@
      public TaskDao taskDao;
 
      public ListView taskListView;
-     public List<Task> taskLis
+     public List<Task> taskList;
     // Commented out do to conflicts!
     // ListView taskListView;
     // private tasksViewModel mViewModel;
-    // private Toolbar mTopToolbar;
+     private Toolbar mTopToolbar;
 
      private int taskCount;
      private String taskAdded;
