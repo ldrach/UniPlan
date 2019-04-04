@@ -53,7 +53,7 @@ import java.util.Date;
              taskDescriptions[a] = "Description";
          }
 
-         //After determing whether a new task is to be added, the adapter is set to display the tasks
+         //After determining whether a new task is to be added, the adapter is set to display the tasks
          tasksAdapter = new ArrayAdapter<>(this,
                  android.R.layout.simple_list_item_1, taskDates);
          taskListView.setAdapter(tasksAdapter);
@@ -68,6 +68,9 @@ import java.util.Date;
          db = Database.getFileDatabase(getApplicationContext());
          taskList = db.taskDao().getAll();
 
+
+         //Grasping at straws for a fix, can probably delete this line
+         //db.taskDao().deleteAll();
 
          //If there are any tasks, updates task arrays with data
          if(taskList.size()>0) {
@@ -102,6 +105,9 @@ import java.util.Date;
          Task a1 = generateTestTask();
          Task a2 = generateTestTask();
          Task a3 = generateTestTask();
+         a1.date = "a1";
+         a2.date = "a2";
+         a3.date = "a3";
          db.taskDao().insert(a1);
          db.taskDao().insert(a2);
          db.taskDao().insert(a3);
