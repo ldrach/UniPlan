@@ -20,17 +20,12 @@
 
      public Database db;
      public TaskDao taskDao;
-     ListView taskListView;
+     public ListView taskListView;
      private tasksViewModel mViewModel;
      private Toolbar mTopToolbar;
 
 
-     public ListView taskListView;
      public List<Task> taskList;
-// Commented out do to conflicts!
-    // ListView taskListView;
-    // private tasksViewModel mViewModel;
-     private Toolbar mTopToolbar;
 
 
      private String taskName;
@@ -62,13 +57,14 @@
         taskListView = findViewById(R.id.taskListView);
         taskCount = 0;
 
-         taskDates = new String[100];
-         taskDescriptions = new String[100];
+         taskDates = new String[10];
+         taskDescriptions = new String[10];
          for(int a=0;a<taskDates.length;a++){
              taskDates[a] = "April 1";
              taskDescriptions[a] = "Description";
          }
-
+         tasksAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, taskDates);
+         taskListView.setAdapter(tasksAdapter);
           /*
         !!!!!!!!!!!!!!!! NEED TO RESTORE PREVIOUS STATE OF taskCount and instance of database here,
         AFTER TASK COUNT IS INITIALIZED TO 0, OTHERWISE taskDates WILL ALWAYS BE EMPTY AND NO TASKS
@@ -79,6 +75,7 @@
          //Instance of room database implemented here~~~~~~~~~~~~~~~~~~~
          db = Database.getFileDatabase(getApplicationContext());
          taskList = db.taskDao().getAll();
+         updateTaskArrays();
 /*
          //Grasping at straws for a fix, this might have been it. Will come up with a better solution later
          db.taskDao().deleteAll();
@@ -88,24 +85,7 @@
              current++;
          }
 */
-         //If there are any tasks, updates task arrays with data
-         if(taskList.size()>0) {
-             updateTaskArrays();
-             taskCount = taskList.size();
-         }
-//Issues Here
-         //If there are any tasks, populates taskDates array with tasks from database
-//          if(taskCount>0){
-//              getTasksArray();
-//          }
 
-         //Instance of room database implemented here~~~~~~~~~~~~~~~~~~~
-//          db = Database.getFileDatabase(getApplicationContext());
-
-
-
-//          //Remove this line after testing
-//          db.taskDao().deleteAll();
 
 
          Intent intent = getIntent();
@@ -137,10 +117,8 @@
  //Issues found here
          //populates arrays after new task is added
          updateTaskArrays();
-         taskDescriptions = getTasksArray();
          Toast.makeText(this, taskDates[0],Toast.LENGTH_SHORT).show();
-             tasksAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, taskDates);
-             taskListView.setAdapter(tasksAdapter);
+
 
 
 
@@ -151,13 +129,16 @@
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Creates a new array with 5 more spots and assigns it back to taskDates
-                if(taskCount>(taskDates.length-5)){
+                //Creates a new array with 5 more spots and assigns it back to taskDates & taskDescriptions
+                if(taskCount>(taskDates.length-1)|| taskCount>(taskDescriptions.length-1)){
                     String[] temp = new String[taskDates.length+5];
+                    String[] temp2 = new String[taskDescriptions.length+5];
                     for(int n=0;n<taskDates.length;n++){
                         temp[n] = taskDates[n];
+                        temp2[n] = taskDescriptions[n];
                     }
                     taskDates = temp;
+                    taskDescriptions = temp2;
                 }
                 Intent i = new Intent(MainActivity.this, AddTask.class);
 
@@ -184,6 +165,20 @@
             tasks[i] = currentTask.displayTask();
         }
         return tasks;
+    }
+
+    private void updateTaskArrays(){
+        taskList = db.taskDao().getAll();
+        taskCount = taskList.size();
+        Task currentTask;
+        String str = "";
+         for(int i=0;i<taskCount;i++){
+             currentTask = taskList.get(i);
+             taskDates[i] = currentTask.getTaskDate();
+             str = currentTask.getTaskName();
+             str += "\nDescription: " + currentTask.getTaskNotes();
+             taskDescriptions[i] = str;
+         }
     }
 
      @Override

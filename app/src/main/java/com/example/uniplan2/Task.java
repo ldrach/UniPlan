@@ -34,6 +34,19 @@ public class Task {
         return str;
     }
 
+    public int getClassId(){
+        return id;
+    }
+    public String getTaskName(){
+        return name;
+    }
+    public String getTaskNotes(){
+        return notes;
+    }
+    public String getTaskDate() {
+        return date;
+    }
+
 
 }
 
