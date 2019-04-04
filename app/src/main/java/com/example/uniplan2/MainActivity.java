@@ -10,8 +10,11 @@
  import android.view.MenuItem;
  import android.view.View;
  import android.widget.ArrayAdapter;
+ import android.widget.Button;
  import android.widget.ListView;
  import android.widget.Toast;
+
+ import java.util.List;
 
  public class MainActivity extends AppCompatActivity {
 
@@ -21,9 +24,19 @@
      private tasksViewModel mViewModel;
      private Toolbar mTopToolbar;
 
+
+     public ListView taskListView;
+     public List<Task> taskList;
+// Commented out do to conflicts!
+    // ListView taskListView;
+    // private tasksViewModel mViewModel;
+     private Toolbar mTopToolbar;
+
+
      private String taskName;
      private String taskDescription;
      private String taskDueDate;
+
      private int taskCount;
      private String taskAdded;
 
@@ -62,18 +75,38 @@
         WILL APPEAR ON MAIN PAGE
          */
 
-         //If there are any tasks, populates taskDates array with tasks from database
-         if(taskCount>0){
-             getTasksArray();
-         }
 
          //Instance of room database implemented here~~~~~~~~~~~~~~~~~~~
          db = Database.getFileDatabase(getApplicationContext());
-
-
-
-         //Remove this line after testing
+         taskList = db.taskDao().getAll();
+/*
+         //Grasping at straws for a fix, this might have been it. Will come up with a better solution later
          db.taskDao().deleteAll();
+         int current=0;
+         while(current<taskList.size()){
+             db.taskDao().insert(taskList.get(current));
+             current++;
+         }
+*/
+         //If there are any tasks, updates task arrays with data
+         if(taskList.size()>0) {
+             updateTaskArrays();
+             taskCount = taskList.size();
+         }
+//Issues Here
+         //If there are any tasks, populates taskDates array with tasks from database
+//          if(taskCount>0){
+//              getTasksArray();
+//          }
+
+         //Instance of room database implemented here~~~~~~~~~~~~~~~~~~~
+//          db = Database.getFileDatabase(getApplicationContext());
+
+
+
+//          //Remove this line after testing
+//          db.taskDao().deleteAll();
+
 
          Intent intent = getIntent();
 
@@ -100,16 +133,14 @@
              taskCount++;
          }
 
+
+ //Issues found here
+         //populates arrays after new task is added
+         updateTaskArrays();
          taskDescriptions = getTasksArray();
          Toast.makeText(this, taskDates[0],Toast.LENGTH_SHORT).show();
-
-
-
              tasksAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, taskDates);
              taskListView.setAdapter(tasksAdapter);
-
-
-
 
 
 
@@ -133,15 +164,6 @@
                 startActivity(i);
             }
         });
-
-//        Button addClassButton = findViewById(R.id.addClassBtn);
-//        addClassButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(MainActivity.this, AddClass.class);
-//                startActivity(i);
-//            }
-//        });
 
 
 

@@ -18,6 +18,7 @@ public class AddTask extends AppCompatActivity implements View.OnClickListener {
     public Button btnDatePicker;
     public EditText txtDate;
     private int mYear, mMonth, mDay;
+    private int dayInt, monthInt, yearInt;
 
     //Values to store in task table
     public String taskName;
@@ -53,9 +54,9 @@ public class AddTask extends AppCompatActivity implements View.OnClickListener {
                 Intent i = new Intent(getBaseContext(), MainActivity.class );
                 i.putExtra("taskName", taskName);
                 i.putExtra("notes", notes);
-                i.putExtra("day", mDay);
-                i.putExtra("month", mMonth);
-                i.putExtra("year", mYear);
+                i.putExtra("day", dayInt);
+                i.putExtra("month", monthInt);
+                i.putExtra("year", yearInt);
 
                 taskAdded = "t";
                 i.putExtra("taskAdded", taskAdded);
@@ -82,6 +83,10 @@ public class AddTask extends AppCompatActivity implements View.OnClickListener {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     txtDate.setText(dayOfMonth + "/" + (month+1) + "/" + year);
+                    dayInt = dayOfMonth;
+                    monthInt = month+1;
+                    yearInt = year;
+
                 }
             }, mYear, mMonth, mDay);
             datePickerDialog.show();
