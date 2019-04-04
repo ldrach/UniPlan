@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
@@ -20,6 +21,7 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
 
     EditText fromTimePicker1, toTimePicker1, fromTimePicker2, toTimePicker2, fromTimePicker3, toTimePicker3, fromTimePicker4, toTimePicker4, fromTimePicker5, toTimePicker5;
     private int mHour, mMinute;
+    Button pickColor;
 
 
 
@@ -39,6 +41,7 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
         toTimePicker4 = (EditText) findViewById(R.id.toTimeEdit4);
         fromTimePicker5 = (EditText) findViewById(R.id.fromTimeEdit5);
         toTimePicker5 = (EditText) findViewById(R.id.toTimeEdit5);
+        pickColor = findViewById(R.id.colorButton);
         NumberFormat nf = NumberFormat.getInstance();
 
         Spinner daySpinner1 = (Spinner) findViewById(R.id.classDay1Spinner);
@@ -76,7 +79,16 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
             }
         });
 
+        pickColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
+
     }
+
+
 
     @Override
     public void onClick(View v) {
@@ -89,14 +101,7 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    String AM_PM ;
-                    if(hourOfDay < 12) {
-                        AM_PM = "AM";
-                    } else {
-                        hourOfDay = hourOfDay-12;
-                        AM_PM = "PM";
-                    }
-                    fromTimePicker1.setText(String.format("%01d:%02d", hourOfDay, minute) + AM_PM);
+                    fromTimePicker1.setText(String.format("%01d:%02d", hourOfDay, minute));
                 }
             }, mHour, mMinute, false);
             timePickerDialog.show();
@@ -110,14 +115,7 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    String AM_PM ;
-                    if(hourOfDay < 12) {
-                        AM_PM = "AM";
-                    } else {
-                        hourOfDay = hourOfDay-12;
-                        AM_PM = "PM";
-                    }
-                    toTimePicker1.setText(String.format("%01d:%02d", hourOfDay, minute) + AM_PM);
+                    toTimePicker1.setText(String.format("%01d:%02d", hourOfDay, minute));
                 }
             }, mHour, mMinute, false);
             timePickerDialog.show();
@@ -131,14 +129,7 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    String AM_PM ;
-                    if(hourOfDay < 12) {
-                        AM_PM = "AM";
-                    } else {
-                        hourOfDay = hourOfDay-12;
-                        AM_PM = "PM";
-                    }
-                    fromTimePicker2.setText(String.format("%01d:%02d", hourOfDay, minute) + AM_PM);
+                    fromTimePicker2.setText(String.format("%01d:%02d", hourOfDay, minute));
                 }
             }, mHour, mMinute, false);
             timePickerDialog.show();
@@ -152,14 +143,7 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    String AM_PM ;
-                    if(hourOfDay < 12) {
-                        AM_PM = "AM";
-                    } else {
-                        hourOfDay = hourOfDay-12;
-                        AM_PM = "PM";
-                    }
-                    toTimePicker2.setText(String.format("%01d:%02d", hourOfDay, minute) + AM_PM);
+                    toTimePicker2.setText(String.format("%01d:%02d", hourOfDay, minute));
                 }
             }, mHour, mMinute, false);
             timePickerDialog.show();
@@ -173,14 +157,7 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    String AM_PM ;
-                    if(hourOfDay < 12) {
-                        AM_PM = "AM";
-                    } else {
-                        hourOfDay = hourOfDay-12;
-                        AM_PM = "PM";
-                    }
-                    fromTimePicker3.setText(String.format("%01d:%02d", hourOfDay, minute) + AM_PM);
+                    fromTimePicker3.setText(String.format("%01d:%02d", hourOfDay, minute));
                 }
             }, mHour, mMinute, false);
             timePickerDialog.show();
@@ -194,14 +171,7 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    String AM_PM ;
-                    if(hourOfDay < 12) {
-                        AM_PM = "AM";
-                    } else {
-                        hourOfDay = hourOfDay-12;
-                        AM_PM = "PM";
-                    }
-                    toTimePicker3.setText(String.format("%01d:%02d", hourOfDay, minute) + AM_PM);
+                    toTimePicker3.setText(String.format("%01d:%02d", hourOfDay, minute));
                 }
             }, mHour, mMinute, false);
             timePickerDialog.show();
@@ -215,14 +185,7 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    String AM_PM ;
-                    if(hourOfDay < 12) {
-                        AM_PM = "AM";
-                    } else {
-                        hourOfDay = hourOfDay-12;
-                        AM_PM = "PM";
-                    }
-                    fromTimePicker4.setText(String.format("%01d:%02d", hourOfDay, minute) + AM_PM);
+                    fromTimePicker4.setText(String.format("%01d:%02d", hourOfDay, minute));
                 }
             }, mHour, mMinute, false);
             timePickerDialog.show();
@@ -236,14 +199,7 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    String AM_PM ;
-                    if(hourOfDay < 12) {
-                        AM_PM = "AM";
-                    } else {
-                        hourOfDay = hourOfDay-12;
-                        AM_PM = "PM";
-                    }
-                    toTimePicker4.setText(String.format("%01d:%02d", hourOfDay, minute) + AM_PM);
+                    toTimePicker4.setText(String.format("%01d:%02d", hourOfDay, minute));
                 }
             }, mHour, mMinute, false);
             timePickerDialog.show();
@@ -257,14 +213,7 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    String AM_PM ;
-                    if(hourOfDay < 12) {
-                        AM_PM = "AM";
-                    } else {
-                        hourOfDay = hourOfDay-12;
-                        AM_PM = "PM";
-                    }
-                    fromTimePicker5.setText(String.format("%01d:%02d", hourOfDay, minute) + AM_PM);
+                    fromTimePicker5.setText(String.format("%01d:%02d", hourOfDay, minute));
                 }
             }, mHour, mMinute, false);
             timePickerDialog.show();
@@ -278,14 +227,7 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    String AM_PM ;
-                    if(hourOfDay < 12) {
-                        AM_PM = "AM";
-                    } else {
-                        hourOfDay = hourOfDay-12;
-                        AM_PM = "PM";
-                    }
-                    toTimePicker5.setText(String.format("%01d:%02d", hourOfDay, minute) + AM_PM);
+                    toTimePicker5.setText(String.format("%01d:%02d", hourOfDay, minute));
                 }
             }, mHour, mMinute, false);
             timePickerDialog.show();

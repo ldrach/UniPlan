@@ -13,7 +13,9 @@ import io.reactivex.annotations.NonNull;
 @Entity(tableName = "task")
 public class Task {
 
+    //Primary key needs to be set up properly
     @PrimaryKey(autoGenerate = true)
+
 
     @ColumnInfo(name = "id")
     public int id;
@@ -27,17 +29,9 @@ public class Task {
     @ColumnInfo(name = "date")
     public String date;
 
-    public int getClassId(){
-        return id;
-    }
-    public String getTaskName(){
-        return name;
-    }
-    public String getTaskNotes(){
-        return notes;
-    }
-    public String getTaskDate(){
-        return date;
+    public String displayTask(){
+        String str = name + "\n" + notes;
+        return str;
     }
 
 

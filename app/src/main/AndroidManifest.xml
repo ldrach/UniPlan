@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:screenOrientation="portrait">
-        <activity android:name=".calendar"></activity>
+        <activity android:name=".calendar"/>
         <activity android:name=".editClass" />
         <activity android:name=".AddClass" />
         <activity android:name=".AddTask" />

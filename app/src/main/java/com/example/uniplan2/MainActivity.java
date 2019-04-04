@@ -20,13 +20,22 @@
 
      public Database db;
      public TaskDao taskDao;
+     ListView taskListView;
+     private tasksViewModel mViewModel;
+     private Toolbar mTopToolbar;
+
 
      public ListView taskListView;
      public List<Task> taskList;
-    // Commented out do to conflicts!
+// Commented out do to conflicts!
     // ListView taskListView;
     // private tasksViewModel mViewModel;
      private Toolbar mTopToolbar;
+
+
+     private String taskName;
+     private String taskDescription;
+     private String taskDueDate;
 
      private int taskCount;
      private String taskAdded;
@@ -51,22 +60,21 @@
          setSupportActionBar(mTopToolbar);
 
         taskListView = findViewById(R.id.taskListView);
+        taskCount = 0;
 
-         taskDates = new String[10];
-         taskDescriptions = new String[10];
+         taskDates = new String[100];
+         taskDescriptions = new String[100];
          for(int a=0;a<taskDates.length;a++){
              taskDates[a] = "April 1";
              taskDescriptions[a] = "Description";
          }
 
-         //After determining whether a new task is to be added, the adapter is set to display the tasks
-         tasksAdapter = new ArrayAdapter<>(this,
-                 android.R.layout.simple_list_item_1, taskDates);
-         taskListView.setAdapter(tasksAdapter);
           /*
-        !!!!!!!!!!!!!!!! NEED TO RESTORE PREVIOUS STATE OF taskList, taskCount,
-        and instance of database here
+        !!!!!!!!!!!!!!!! NEED TO RESTORE PREVIOUS STATE OF taskCount and instance of database here,
+        AFTER TASK COUNT IS INITIALIZED TO 0, OTHERWISE taskDates WILL ALWAYS BE EMPTY AND NO TASKS
+        WILL APPEAR ON MAIN PAGE
          */
+
 
          //Instance of room database implemented here~~~~~~~~~~~~~~~~~~~
          db = Database.getFileDatabase(getApplicationContext());
@@ -85,45 +93,66 @@
              updateTaskArrays();
              taskCount = taskList.size();
          }
+//Issues Here
+         //If there are any tasks, populates taskDates array with tasks from database
+//          if(taskCount>0){
+//              getTasksArray();
+//          }
 
-         //If this intent is coming from the add task activity, the taskAdded string will be "t",
-         //indicating that a new task is to be added to the database
+         //Instance of room database implemented here~~~~~~~~~~~~~~~~~~~
+//          db = Database.getFileDatabase(getApplicationContext());
+
+
+
+//          //Remove this line after testing
+//          db.taskDao().deleteAll();
+
+
          Intent intent = getIntent();
+
+         //Set task count
          taskAdded = intent.getStringExtra("taskAdded");
+         Toast.makeText(this, taskAdded, Toast.LENGTH_SHORT).show();
          if((taskAdded != null) && taskAdded.equalsIgnoreCase("t")) {
-             taskAdded = "false";
-             //Adds task to database from the given intent
+
+             //Populating database with task data fields
              Task task = new Task();
              task.name = intent.getStringExtra("taskName");
-             task.id = taskList.size();
+             task.id = taskCount;
              task.notes = intent.getStringExtra("notes");
              year = intent.getIntExtra("year", 0);
              month = intent.getIntExtra("month", 0);
              day = intent.getIntExtra("day", 0);
              task.date = "" + day + "/" + month + "/" + year;
 
+             //Database is not storing the data. Either the insert function doesn't work,
+             // or the find function does not work, or it is just not running properly
              db.taskDao().insert(task);
-             taskList = db.taskDao().getAll();
-             taskCount = taskList.size();
+             Toast.makeText(this, task.displayTask(),Toast.LENGTH_SHORT).show();
 
-             //populates arrays after new task is added
-             updateTaskArrays();
+             taskCount++;
          }
 
+
+ //Issues found here
          //populates arrays after new task is added
          updateTaskArrays();
+         taskDescriptions = getTasksArray();
+         Toast.makeText(this, taskDates[0],Toast.LENGTH_SHORT).show();
+             tasksAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, taskDates);
+             taskListView.setAdapter(tasksAdapter);
 
 
 
 
 
-             //Add class button created here
+
         FloatingActionButton fab = findViewById(R.id.addBtn);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Creates a new array with 5 more spots and assigns it back to taskDates
-                if(taskCount>(taskDates.length-1)){
+                if(taskCount>(taskDates.length-5)){
                     String[] temp = new String[taskDates.length+5];
                     for(int n=0;n<taskDates.length;n++){
                         temp[n] = taskDates[n];
@@ -131,48 +160,30 @@
                     taskDates = temp;
                 }
                 Intent i = new Intent(MainActivity.this, AddTask.class);
+
                 startActivity(i);
             }
         });
 
 
-        Button addClassButton = findViewById(R.id.addClassBtn);
-        addClassButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, AddClass.class);
-                startActivity(i);
-            }
-        });
-    } //End of onCreate method
 
 
-    //Populates taskDates with dates of all tasks, and taskDescriptions with the corresponding task
-    //names and descriptions
-    private void updateTaskArrays(){
-        String str = " ";
 
-        taskList = db.taskDao().getAll();
-        for (int i = 0; i<taskCount; i++) {
-            Task currentTask = taskList.get(i);
-
-            taskDates[i] = currentTask.getTaskDate();
-
-            str += currentTask.getTaskName() + "\nDescription: " + currentTask.getTaskNotes();
-            taskDescriptions[i] = str;
-        }
     }
 
-    private Task generateTestTask(){
-        Task task1 = new Task();
-        task1.name = "testName";
-        task1.id = taskCount;
-        task1.notes = "testNotes";
-        year = 2019;
-        month = 1;
-        day = 1;
-        task1.date = "" + day + "/" + month + "/" + year;
-         return task1;
+    //Populates taskDates with dates of all tasks, and returns an array with the corresponding task
+    //names and descriptions
+    private String[] getTasksArray(){
+        String[] tasks = new String[taskCount];
+        for (int i = 0; i<taskCount; i++) {
+
+            Task currentTask = db.taskDao().findTask(i);
+            String currentDate = currentTask.date;
+
+            taskDates[i] = currentDate;
+            tasks[i] = currentTask.displayTask();
+        }
+        return tasks;
     }
 
      @Override
