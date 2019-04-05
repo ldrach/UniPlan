@@ -9,6 +9,7 @@
  import android.view.Menu;
  import android.view.MenuItem;
  import android.view.View;
+ import android.widget.AdapterView;
  import android.widget.ArrayAdapter;
  import android.widget.Button;
  import android.widget.ListView;
@@ -111,14 +112,9 @@
          }
 
 
- //Issues found here
+
          //populates arrays after new task is added
          updateTaskArrays();
-
-
-
-
-
 
 
         FloatingActionButton fab = findViewById(R.id.addBtn);
@@ -142,7 +138,21 @@
             }
         });
 
-    }//End of onCreate method
+         taskListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+             @Override
+             public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                            int position, long id) {
+
+                 //db.taskDao().delete(taskList.get(position));
+                 Toast.makeText(MainActivity.this, "Working", Toast.LENGTH_LONG).show();
+
+                 return true;
+             }
+
+         });
+
+     }//End of onCreate method
 
     //Populates taskDates with dates of all tasks, and returns an array with the corresponding task
     //names and descriptions
