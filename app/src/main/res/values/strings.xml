@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UniPlan2</string>
+    <string name="app_name">UniPlan</string>
     <string name="task_name">Task Name</string>
     <string name="task_name_view">Task Name:</string>
     <string name="class_view">Class:</string>

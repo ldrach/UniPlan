@@ -206,11 +206,24 @@
              return true;
          }
 
-         if (id == R.id.action_add) {
+         else if (id == R.id.action_add) {
              Intent i = new Intent(getBaseContext(), AddClass.class);
              startActivity(i);
              return true;
          }
+
+         else if (id == R.id.menu_classes){
+             Intent i = new Intent(getBaseContext(), ViewClasses.class);
+             startActivity(i);
+             return true;
+         }
+
+         else if (id == R.id.menu_settings){
+             Intent i = new Intent(getBaseContext(), Settings.class);
+             startActivity(i);
+             return true;
+         }
+
 
          return super.onOptionsItemSelected(item);
      }
