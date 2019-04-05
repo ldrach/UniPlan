@@ -51,7 +51,7 @@
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
 
-         mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+         mTopToolbar = findViewById(R.id.my_toolbar);
          setSupportActionBar(mTopToolbar);
 
         taskListView = findViewById(R.id.taskListView);
@@ -63,7 +63,7 @@
              taskDates[a] = "April 1";
              taskDescriptions[a] = "Description";
          }
-         tasksAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, taskDates);
+         tasksAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, taskDates);
          taskListView.setAdapter(tasksAdapter);
           /*
         !!!!!!!!!!!!!!!! NEED TO RESTORE PREVIOUS STATE OF taskCount and instance of database here,

@@ -8,12 +8,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
-
-import java.text.NumberFormat;
 import java.util.Calendar;
 
 
@@ -32,24 +29,22 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_add_class);
 
-        fromTimePicker1 = (EditText) findViewById(R.id.fromTimeEdit1);
-        toTimePicker1 = (EditText) findViewById(R.id.toTimeEdit1);
-        fromTimePicker2 = (EditText) findViewById(R.id.fromTimeEdit2);
-        toTimePicker2 = (EditText) findViewById(R.id.toTimeEdit2);
-        fromTimePicker3 = (EditText) findViewById(R.id.fromTimeEdit3);
-        toTimePicker3 = (EditText) findViewById(R.id.toTimeEdit3);
-        fromTimePicker4 = (EditText) findViewById(R.id.fromTimeEdit4);
-        toTimePicker4 = (EditText) findViewById(R.id.toTimeEdit4);
-        fromTimePicker5 = (EditText) findViewById(R.id.fromTimeEdit5);
-        toTimePicker5 = (EditText) findViewById(R.id.toTimeEdit5);
+        fromTimePicker1 = findViewById(R.id.fromTimeEdit1);
+        toTimePicker1 = findViewById(R.id.toTimeEdit1);
+        fromTimePicker2 = findViewById(R.id.fromTimeEdit2);
+        toTimePicker2 = findViewById(R.id.toTimeEdit2);
+        fromTimePicker3 = findViewById(R.id.fromTimeEdit3);
+        toTimePicker3 = findViewById(R.id.toTimeEdit3);
+        fromTimePicker4 = findViewById(R.id.fromTimeEdit4);
+        toTimePicker4 = findViewById(R.id.toTimeEdit4);
+        fromTimePicker5 = findViewById(R.id.fromTimeEdit5);
+        toTimePicker5 = findViewById(R.id.toTimeEdit5);
 
-        NumberFormat nf = NumberFormat.getInstance();
-
-        Spinner daySpinner1 = (Spinner) findViewById(R.id.classDay1Spinner);
-        Spinner daySpinner2 = (Spinner) findViewById(R.id.classDay2Spinner);
-        Spinner daySpinner3 = (Spinner) findViewById(R.id.classDay3Spinner);
-        Spinner daySpinner4 = (Spinner) findViewById(R.id.classDay4Spinner);
-        Spinner daySpinner5 = (Spinner) findViewById(R.id.classDay5Spinner);
+        Spinner daySpinner1 = findViewById(R.id.classDay1Spinner);
+        Spinner daySpinner2 = findViewById(R.id.classDay2Spinner);
+        Spinner daySpinner3 = findViewById(R.id.classDay3Spinner);
+        Spinner daySpinner4 = findViewById(R.id.classDay4Spinner);
+        Spinner daySpinner5 = findViewById(R.id.classDay5Spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.dayOfWeek, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
