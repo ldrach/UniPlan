@@ -1,21 +1,20 @@
  package com.example.uniplan2;
 
  import android.content.Intent;
- import android.content.pm.ActivityInfo;
- import android.os.Bundle;
- import android.support.design.widget.FloatingActionButton;
- import android.support.v7.app.AppCompatActivity;
- import android.support.v7.widget.Toolbar;
- import android.view.Menu;
- import android.view.MenuItem;
- import android.view.View;
- import android.widget.AdapterView;
- import android.widget.ArrayAdapter;
- import android.widget.Button;
- import android.widget.ListView;
- import android.widget.Toast;
+import android.content.pm.ActivityInfo;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
- import java.util.List;
+import java.util.List;
 
  public class MainActivity extends AppCompatActivity {
 
@@ -59,10 +58,14 @@
         taskListView = findViewById(R.id.taskListView);
         taskCount = 0;
 
-         taskDates = new String[10];
-         taskDescriptions = new String[10];
-         taskDisplay = new String[10];
-         for(int a=0;a<taskDates.length;a++){
+         //Instance of room database implemented here~~~~~~~~~~~~~~~~~~~
+         db = Database.getFileDatabase(getApplicationContext());
+         taskList = db.taskDao().getAll();
+
+         taskDates = new String[taskList.size()];
+         taskDescriptions = new String[taskList.size()];
+         taskDisplay = new String[taskList.size()];
+         for(int a=0;a<taskList.size();a++){
              taskDates[a] = "2019/1/1";
              taskDescriptions[a] = "Description";
              taskDisplay[a] = "";
@@ -78,9 +81,8 @@
          */
 
 
-         //Instance of room database implemented here~~~~~~~~~~~~~~~~~~~
-         db = Database.getFileDatabase(getApplicationContext());
-         taskList = db.taskDao().getAll();
+
+
          updateTaskArrays();
 
 
@@ -92,9 +94,8 @@
 
          //Set task count
          taskAdded = intent.getStringExtra("taskAdded");
-         Toast.makeText(this, taskAdded, Toast.LENGTH_SHORT).show();
          if((taskAdded != null) && taskAdded.equalsIgnoreCase("t")) {
-                setIdFromZero();
+                //setIdFromZero();
              //Populating database with task data fields
              Task task = new Task();
              task.name = intent.getStringExtra("taskName");
@@ -121,15 +122,18 @@
             @Override
             public void onClick(View v) {
                 //Creates a new array with 5 more spots and assigns it back to taskDates & taskDescriptions
-                if(taskCount>(taskDates.length-1)|| taskCount>(taskDescriptions.length-1)){
-                    String[] temp = new String[taskDates.length+5];
-                    String[] temp2 = new String[taskDescriptions.length+5];
+                if(taskList.size()>(taskDates.length-1)|| taskList.size()>(taskDescriptions.length-1)){
+                    String[] temp = new String[taskDates.length+1];
+                    String[] temp2 = new String[taskDescriptions.length+1];
+                    String[] temp3 = new String[taskDisplay.length+1];
                     for(int n=0;n<taskDates.length;n++){
                         temp[n] = taskDates[n];
                         temp2[n] = taskDescriptions[n];
+                        temp3[n] = taskDisplay[n];
                     }
                     taskDates = temp;
                     taskDescriptions = temp2;
+                    taskDisplay = temp3;
                 }
                 Intent i = new Intent(MainActivity.this, AddTask.class);
 
@@ -170,7 +174,7 @@
          sortArraysByDate();
         for(int z=0;z<taskCount;z++){
             String a = taskDates[z];
-            String b = taskDescriptions[z].substring(1);
+            String b = taskDescriptions[z];//.substring(1);
             taskDisplay[z] = a + "\n" + b;
         }
     }
@@ -186,16 +190,25 @@
                 str2 = taskDates[j+1].split("/");
                 if(Integer.parseInt(str1[0])>Integer.parseInt(str2[0])){
                     String temp = taskDates[j];
+                    String temp2 = taskDescriptions[j];
                     taskDates[j] = taskDates[j+1];
+                    taskDescriptions[j] = taskDescriptions[j+1];
                     taskDates[j+1] = temp;
+                    taskDescriptions[j+1] = temp2;
                 }else if(Integer.parseInt(str1[1])>Integer.parseInt(str2[1])){
                     String temp = taskDates[j];
+                    String temp2 = taskDescriptions[j];
                     taskDates[j] = taskDates[j+1];
+                    taskDescriptions[j] = taskDescriptions[j+1];
                     taskDates[j+1] = temp;
+                    taskDescriptions[j+1] = temp2;
                 }else if(Integer.parseInt(str1[2])>Integer.parseInt(str2[2])){
                     String temp = taskDates[j];
+                    String temp2 = taskDescriptions[j];
                     taskDates[j] = taskDates[j+1];
+                    taskDescriptions[j] = taskDescriptions[j+1];
                     taskDates[j+1] = temp;
+                    taskDescriptions[j+1] = temp2;
                 }
 
 
