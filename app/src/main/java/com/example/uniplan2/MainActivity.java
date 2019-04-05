@@ -105,10 +105,7 @@
              day = intent.getIntExtra("day", 0);
              task.date = "" + day + "/" + month + "/" + year;
 
-             //Database is not storing the data. Either the insert function doesn't work,
-             // or the find function does not work, or it is just not running properly
              db.taskDao().insert(task);
-             Toast.makeText(this, task.displayTask(),Toast.LENGTH_SHORT).show();
 
              taskCount++;
          }
@@ -117,7 +114,6 @@
  //Issues found here
          //populates arrays after new task is added
          updateTaskArrays();
-         Toast.makeText(this, taskDates[0],Toast.LENGTH_SHORT).show();
 
 
 
@@ -146,11 +142,7 @@
             }
         });
 
-
-
-
-
-    }
+    }//End of onCreate method
 
     //Populates taskDates with dates of all tasks, and returns an array with the corresponding task
     //names and descriptions
@@ -179,6 +171,18 @@
              str += "\nDescription: " + currentTask.getTaskNotes();
              taskDescriptions[i] = str;
          }
+    }
+//Sorts arrays, given the date in the taskDates array
+    private void sortArraysByDate(){
+         String tempDate;
+         String str;
+         String[] temp1 = new String[taskDates.length];
+         String[] temp2 = new String[taskDescriptions.length];
+        for(int n=0;n<taskDates.length;n++){
+           str = taskDates[n];
+        }
+        taskDates = temp1;
+        taskDescriptions = temp2;
     }
 
      @Override
