@@ -61,7 +61,7 @@
          taskDates = new String[10];
          taskDescriptions = new String[10];
          for(int a=0;a<taskDates.length;a++){
-             taskDates[a] = "April 1";
+             taskDates[a] = "2019/1/1";
              taskDescriptions[a] = "Description";
          }
          tasksAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, taskDates);
@@ -77,15 +77,9 @@
          db = Database.getFileDatabase(getApplicationContext());
          taskList = db.taskDao().getAll();
          updateTaskArrays();
-/*
-         //Grasping at straws for a fix, this might have been it. Will come up with a better solution later
+
          db.taskDao().deleteAll();
-         int current=0;
-         while(current<taskList.size()){
-             db.taskDao().insert(taskList.get(current));
-             current++;
-         }
-*/
+
 
 
 
@@ -104,12 +98,12 @@
              year = intent.getIntExtra("year", 0);
              month = intent.getIntExtra("month", 0);
              day = intent.getIntExtra("day", 0);
-             task.date = "" + day + "/" + month + "/" + year;
+             task.date = "" + year + "/" + month + "/" + day;
 
              db.taskDao().insert(task);
 
-             taskCount++;
          }
+
 
 
 
@@ -154,20 +148,6 @@
 
      }//End of onCreate method
 
-    //Populates taskDates with dates of all tasks, and returns an array with the corresponding task
-    //names and descriptions
-    private String[] getTasksArray(){
-        String[] tasks = new String[taskCount];
-        for (int i = 0; i<taskCount; i++) {
-
-            Task currentTask = db.taskDao().findTask(i);
-            String currentDate = currentTask.date;
-
-            taskDates[i] = currentDate;
-            tasks[i] = currentTask.displayTask();
-        }
-        return tasks;
-    }
 
     private void updateTaskArrays(){
         taskList = db.taskDao().getAll();
@@ -177,22 +157,40 @@
          for(int i=0;i<taskCount;i++){
              currentTask = taskList.get(i);
              taskDates[i] = currentTask.getTaskDate();
-             str = currentTask.getTaskName();
+             str+= currentTask.id;
+             str += currentTask.getTaskName();
              str += "\nDescription: " + currentTask.getTaskNotes();
              taskDescriptions[i] = str;
          }
+         sortArraysByDate();
     }
 //Sorts arrays, given the date in the taskDates array
     private void sortArraysByDate(){
-         String tempDate;
-         String str;
-         String[] temp1 = new String[taskDates.length];
-         String[] temp2 = new String[taskDescriptions.length];
-        for(int n=0;n<taskDates.length;n++){
-           str = taskDates[n];
+         String[] str1;
+         String[] str2;
+
+        int n=taskDates.length;
+        for(int i=0;i<n-1;i++){
+            for(int j=0;j<n-i-1;j++) {
+                str1 = taskDates[j].split("/");
+                str2 = taskDates[j+1].split("/");
+                if(Integer.parseInt(str1[0])>Integer.parseInt(str2[0])){
+                    String temp = taskDates[j];
+                    taskDates[j] = taskDates[j+1];
+                    taskDates[j+1] = temp;
+                }else if(Integer.parseInt(str1[1])>Integer.parseInt(str2[1])){
+                    String temp = taskDates[j];
+                    taskDates[j] = taskDates[j+1];
+                    taskDates[j+1] = temp;
+                }else if(Integer.parseInt(str1[2])>Integer.parseInt(str2[2])){
+                    String temp = taskDates[j];
+                    taskDates[j] = taskDates[j+1];
+                    taskDates[j+1] = temp;
+                }
+
+
+            }
         }
-        taskDates = temp1;
-        taskDescriptions = temp2;
     }
 
      @Override

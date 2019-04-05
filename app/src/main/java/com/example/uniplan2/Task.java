@@ -13,11 +13,7 @@ import io.reactivex.annotations.NonNull;
 @Entity(tableName = "task")
 public class Task {
 
-    //Primary key needs to be set up properly
-    @PrimaryKey(autoGenerate = true)
-
-
-    @ColumnInfo(name = "id")
+    @PrimaryKey
     public int id;
 
     @ColumnInfo(name = "name")
