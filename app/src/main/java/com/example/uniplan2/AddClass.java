@@ -19,9 +19,10 @@ import java.util.Calendar;
 
 public class AddClass extends AppCompatActivity implements View.OnClickListener{
 
-    EditText fromTimePicker1, toTimePicker1, fromTimePicker2, toTimePicker2, fromTimePicker3, toTimePicker3, fromTimePicker4, toTimePicker4, fromTimePicker5, toTimePicker5;
+    EditText fromTimePicker1, toTimePicker1, fromTimePicker2, toTimePicker2, fromTimePicker3,
+            toTimePicker3, fromTimePicker4, toTimePicker4, fromTimePicker5, toTimePicker5;
     private int mHour, mMinute;
-    Button pickColor;
+
 
 
 
@@ -41,7 +42,7 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
         toTimePicker4 = (EditText) findViewById(R.id.toTimeEdit4);
         fromTimePicker5 = (EditText) findViewById(R.id.fromTimeEdit5);
         toTimePicker5 = (EditText) findViewById(R.id.toTimeEdit5);
-        pickColor = findViewById(R.id.colorButton);
+
         NumberFormat nf = NumberFormat.getInstance();
 
         Spinner daySpinner1 = (Spinner) findViewById(R.id.classDay1Spinner);
@@ -78,14 +79,6 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
                 startActivity(i);
             }
         });
-
-        pickColor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                
-            }
-        });
-
     }
 
 
