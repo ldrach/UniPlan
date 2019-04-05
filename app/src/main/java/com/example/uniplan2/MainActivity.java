@@ -44,6 +44,7 @@
      //Array of all dates for tasks with task info
      public String[] taskDates;
      public String[] taskDescriptions;
+     public String[] taskDisplay;
 
 
      @Override
@@ -60,11 +61,15 @@
 
          taskDates = new String[10];
          taskDescriptions = new String[10];
+         taskDisplay = new String[10];
          for(int a=0;a<taskDates.length;a++){
              taskDates[a] = "2019/1/1";
              taskDescriptions[a] = "Description";
+             taskDisplay[a] = "";
          }
-         tasksAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, taskDates);
+
+
+         tasksAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, taskDisplay);
          taskListView.setAdapter(tasksAdapter);
           /*
         !!!!!!!!!!!!!!!! NEED TO RESTORE PREVIOUS STATE OF taskCount and instance of database here,
@@ -78,7 +83,7 @@
          taskList = db.taskDao().getAll();
          updateTaskArrays();
 
-         db.taskDao().deleteAll();
+
 
 
 
@@ -89,7 +94,7 @@
          taskAdded = intent.getStringExtra("taskAdded");
          Toast.makeText(this, taskAdded, Toast.LENGTH_SHORT).show();
          if((taskAdded != null) && taskAdded.equalsIgnoreCase("t")) {
-
+                setIdFromZero();
              //Populating database with task data fields
              Task task = new Task();
              task.name = intent.getStringExtra("taskName");
@@ -163,6 +168,11 @@
              taskDescriptions[i] = str;
          }
          sortArraysByDate();
+        for(int z=0;z<taskCount;z++){
+            String a = taskDates[z];
+            String b = taskDescriptions[z].substring(1);
+            taskDisplay[z] = a + "\n" + b;
+        }
     }
 //Sorts arrays, given the date in the taskDates array
     private void sortArraysByDate(){
@@ -190,6 +200,16 @@
 
 
             }
+        }
+    }
+
+    public void setIdFromZero(){
+        taskList = db.taskDao().getAll();
+        taskCount = taskList.size();
+        Task currentTask;
+        for(int i=0;i<taskCount;i++){
+            currentTask = taskList.get(i);
+            currentTask.id = i;
         }
     }
 
