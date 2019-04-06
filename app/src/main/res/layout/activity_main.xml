@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/my_toolbar"
+        android:id="@+id/main_toolbar"
         style="@style/HeaderBar"
         android:layout_width="0dp"
         android:layout_height="0dp"

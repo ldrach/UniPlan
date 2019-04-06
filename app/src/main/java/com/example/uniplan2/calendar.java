@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -15,9 +16,14 @@ public class calendar extends AppCompatActivity {
 
     CalendarView calendarView;
     Button backBtn;
+    private Toolbar mTopToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        mTopToolbar = findViewById(R.id.basic_toolbar);
+        setSupportActionBar(mTopToolbar);
+
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_calendar);

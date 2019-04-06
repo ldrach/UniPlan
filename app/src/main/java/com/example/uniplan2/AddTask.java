@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -28,6 +29,7 @@ public class AddTask extends AppCompatActivity implements View.OnClickListener {
     public String notes;
     public int id;
     private String taskAdded;
+    private Toolbar mTopToolbar;
 
 
 
@@ -37,6 +39,9 @@ public class AddTask extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_add_task);
+
+        mTopToolbar = findViewById(R.id.basic_toolbar);
+        setSupportActionBar(mTopToolbar);
 
         final EditText taskNameEditText =  findViewById(R.id.taskNameEditText);
         final EditText taskDescriptionEditText =  findViewById(R.id.taskDescriptionEditText);
