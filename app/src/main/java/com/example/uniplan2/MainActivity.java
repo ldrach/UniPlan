@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
             sortArraysByDate();
             for (int z = 0; z < taskCount; z++) {
                 String a = taskDates[z];
-                String b = taskDescriptions[z];//.substring(1);
+                String b = taskDescriptions[z].substring(1);
                 taskDisplay[z] = a + "\n" + b;
             }
         }else
