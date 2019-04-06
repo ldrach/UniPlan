@@ -63,7 +63,7 @@ public class ViewClasses extends AppCompatActivity {
             Log.d("position","Index = " + index);
 
 
-        }
+        }*/
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +71,7 @@ public class ViewClasses extends AppCompatActivity {
                 Intent i = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(i);
             }
-        });*/
+        });
 
         //updateClassArrays();
     }//End of onCreate
