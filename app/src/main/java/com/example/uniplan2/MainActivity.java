@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int taskCount;
     private String taskAdded;
+    private String classAdded;
 
     private int day;
     private int month;
@@ -66,33 +67,21 @@ public class MainActivity extends AppCompatActivity {
         db = Database.getFileDatabase(getApplicationContext());
         taskList = db.taskDao().getAll();
 
-        taskDates = new String[25];
-        taskDescriptions = new String[25];
-        taskDisplay = new String[25];
-        for(int a=0;a<25;a++){
-            taskDates[a] = "2019/1/1";
-            taskDescriptions[a] = "Description";
-            taskDisplay[a] = "";
-        }
+        taskDates = new String[taskList.size()+5];
+        taskDescriptions = new String[taskList.size()+5];
+        taskDisplay = new String[taskList.size()+5];
+        updateTaskArrays();
 
 
         tasksAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, taskDisplay);
         taskListView.setAdapter(tasksAdapter);
-          /*
-        !!!!!!!!!!!!!!!! NEED TO RESTORE PREVIOUS STATE OF taskCount and instance of database here,
-        AFTER TASK COUNT IS INITIALIZED TO 0, OTHERWISE taskDates WILL ALWAYS BE EMPTY AND NO TASKS
-        WILL APPEAR ON MAIN PAGE
-         */
 
 
-
-
-        //updateTaskArrays();
-
+        //~~~~~~~~~~~~~~Retrieves intent that started the activity. ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        //Here we determine whether a class was just added or a task was just added, or neither.
         Intent intent = getIntent();
 
-
-        //Set task count
+        //Case 1: A task has been added, and taskAdded contains "t"
         taskAdded = intent.getStringExtra("taskAdded");
         if((taskAdded != null) && taskAdded.equalsIgnoreCase("t")) {
             //setIdFromZero();
@@ -107,8 +96,29 @@ public class MainActivity extends AppCompatActivity {
             task.date = "" + year + "/" + month + "/" + day;
 
             long index = db.taskDao().insert(task);
-            Log.d("position","Index = " + index);
 
+
+        }
+        //Case 2: A class has been added, and classAdded contains "t"
+        classAdded = intent.getStringExtra("classAdded");
+        if((classAdded != null) && classAdded.equalsIgnoreCase("t")) {
+            //Populating database with class data fields
+            Class classObject = new Class();
+            classObject.name = intent.getStringExtra("className");
+
+
+            db.classDao().insert(classObject);
+
+            /*task.id = taskCount;
+            task.notes = intent.getStringExtra("notes");
+            year = intent.getIntExtra("year", 0);
+            month = intent.getIntExtra("month", 0);
+            day = intent.getIntExtra("day", 0);
+            task.date = "" + year + "/" + month + "/" + day;
+
+            long index = db.taskDao().insert(task);
+
+*/
 
         }
 
@@ -122,9 +132,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Creates a new array with 5 more spots and assigns it back to taskDates & taskDescriptions
                 if(taskList.size()>(taskDates.length-1)|| taskList.size()>(taskDescriptions.length-1)){
-                    String[] temp = new String[taskDates.length+1];
-                    String[] temp2 = new String[taskDescriptions.length+1];
-                    String[] temp3 = new String[taskDisplay.length+1];
+                    String[] temp = new String[taskDates.length+5];
+                    String[] temp2 = new String[taskDescriptions.length+5];
+                    String[] temp3 = new String[taskDisplay.length+5];
                     for(int n=0;n<taskDates.length;n++){
                         temp[n] = taskDates[n];
                         temp2[n] = taskDescriptions[n];
@@ -146,14 +156,17 @@ public class MainActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            int position, long id) {
                 Log.d("position","position = " +position);
-                db.taskDao().delete(taskList.get(position));
-               /* backgroundTask bgt = new backgroundTask();
-                bgt.execute();*/
-                Toast.makeText(MainActivity.this, "Task Removed", Toast.LENGTH_LONG).show();
+                if(taskList.size()!=0) {
+                     db.taskDao().delete(taskList.get(position));
+                    //backgroundTask bgt = new backgroundTask();
+                    //bgt.execute();
+                    Toast.makeText(MainActivity.this, "Task Removed", Toast.LENGTH_LONG).show();
+                    updateTaskArrays();
 
+                }else
+                    Toast.makeText(MainActivity.this, "Nothing To Remove", Toast.LENGTH_LONG).show();
                 return true;
             }
-
         });
 
     }//End of onCreate method
@@ -163,6 +176,11 @@ public class MainActivity extends AppCompatActivity {
         taskList = db.taskDao().getAll();
         taskCount = taskList.size();
         Task currentTask;
+        for(int a=0;a<taskDates.length;a++){
+            taskDates[a] = "9999/1/1";
+            taskDescriptions[a] = "Description";
+            taskDisplay[a] = "";
+        }
 
         if (taskCount !=0) {
             for (int i = 0; i < taskCount; i++) {
@@ -176,10 +194,13 @@ public class MainActivity extends AppCompatActivity {
             sortArraysByDate();
             for (int z = 0; z < taskCount; z++) {
                 String a = taskDates[z];
-                String b = taskDescriptions[z];//.substring(1);
+                String b = taskDescriptions[z].substring(1);
                 taskDisplay[z] = a + "\n" + b;
             }
-        }
+        }else
+            taskDisplay[0] = "";
+        tasksAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, taskDisplay);
+        taskListView.setAdapter(tasksAdapter);
     }
     //Sorts arrays, given the date in the taskDates array
     private void sortArraysByDate(){
@@ -191,6 +212,7 @@ public class MainActivity extends AppCompatActivity {
             for(int j=0;j<n-i-1;j++) {
                 str1 = taskDates[j].split("/");
                 str2 = taskDates[j+1].split("/");
+                //If year 1 is greater than year 2, they swap.
                 if(Integer.parseInt(str1[0])>Integer.parseInt(str2[0])){
                     String temp = taskDates[j];
                     String temp2 = taskDescriptions[j];
@@ -198,14 +220,18 @@ public class MainActivity extends AppCompatActivity {
                     taskDescriptions[j] = taskDescriptions[j+1];
                     taskDates[j+1] = temp;
                     taskDescriptions[j+1] = temp2;
-                }else if(Integer.parseInt(str1[1])>Integer.parseInt(str2[1])){
+                    //If year 1 and 2 are equal, and month 1 is greater than month 2, they swap.
+                }
+                if((Integer.parseInt(str1[0])==Integer.parseInt(str2[0])) && Integer.parseInt(str1[1])>Integer.parseInt(str2[1])){
                     String temp = taskDates[j];
                     String temp2 = taskDescriptions[j];
                     taskDates[j] = taskDates[j+1];
                     taskDescriptions[j] = taskDescriptions[j+1];
                     taskDates[j+1] = temp;
                     taskDescriptions[j+1] = temp2;
-                }else if(Integer.parseInt(str1[2])>Integer.parseInt(str2[2])){
+                    //If years 1 and 2, and months 1 and 2 are equal, and day 1 is greater than day 2, they swap.
+                }
+                if((Integer.parseInt(str1[0])==Integer.parseInt(str2[0])) && (Integer.parseInt(str1[1])==Integer.parseInt(str2[1])) && Integer.parseInt(str1[2])>Integer.parseInt(str2[2])){
                     String temp = taskDates[j];
                     String temp2 = taskDescriptions[j];
                     taskDates[j] = taskDates[j+1];

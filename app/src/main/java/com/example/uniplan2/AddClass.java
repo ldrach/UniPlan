@@ -27,8 +27,10 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
             toMin4, toMin5;
     private int spinner1, spinner2, spinner3, spinner4, spinner5;
     public String room1, room2, room3, room4, room5;
-    public boolean classAdded;
+
     private Toolbar mTopToolbar;
+    public String classAdded;
+
 
 
 
@@ -39,10 +41,12 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_add_class);
 
+
         mTopToolbar = findViewById(R.id.basic_toolbar);
         setSupportActionBar(mTopToolbar);
 
-        classAdded = false;
+        classAdded = "f";
+
 
         className = findViewById(R.id.classNameEditText);
 
@@ -98,7 +102,12 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
             @Override
             public void onClick(View v) {
 
+
                 classNameString = className.getText().toString();
+
+                if(classNameString.length()<1){
+                    classNameString = " ";
+                }
 
                 room1 = classRoom1.getText().toString();
                 room2 = classRoom2.getText().toString();
@@ -145,9 +154,10 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
                 i.putExtra("room3", room3);
                 i.putExtra("room4", room4);
                 i.putExtra("room5", room5);
+                classAdded = "t";
                 i.putExtra("classAdded", classAdded);
 
-                classAdded = true;
+
 
                 startActivity(i);
             }

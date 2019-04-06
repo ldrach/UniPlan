@@ -27,7 +27,7 @@ public class Task {
         return str;
     }
 
-    public int getClassId(){
+    public int getId(){
         return id;
     }
     public String getTaskName(){
