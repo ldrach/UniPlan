@@ -29,6 +29,8 @@ public class ViewClasses extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        //Testline 
+
         /*Needs on touch listener that launches editClass Activity for that class*/
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
