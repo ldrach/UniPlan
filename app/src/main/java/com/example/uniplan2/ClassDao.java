@@ -11,6 +11,8 @@ import java.util.List;
 
 @Dao
 public interface ClassDao {
+
+
     @Query("SELECT * FROM class")
     List<Class> getAll();
 
@@ -25,4 +27,7 @@ public interface ClassDao {
 
     @Delete
     void delete(Class newClass);
+
+    @Query("Delete FROM class")
+    void deleteAll();
 }

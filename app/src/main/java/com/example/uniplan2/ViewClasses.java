@@ -21,7 +21,6 @@ public class ViewClasses extends AppCompatActivity {
     ArrayAdapter<String> classAdapter;
     public String[] classes;
     public String[] classDisplay;
-    public boolean classAdded;
     public List<Class> classList;
     public int classCount;
 
@@ -34,38 +33,19 @@ public class ViewClasses extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_view_classes);
-        classAdded=false;
 
         backBtn = findViewById(R.id.viewClassesBackButton);
+        classListView = findViewById(R.id.ClassList);
 
-        /*db = Database.getFileDatabase(getApplicationContext());
+        db = Database.getFileDatabase(getApplicationContext());
         classList = db.classDao().getAll();
 
-        classes = new String[10];
-        classDisplay = new String[10];
-        for(int i=0;i<10;i++) {
-            classes[i] = "Class Test";
-        }
+        updateClassArrays();
+
 
         classAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, classDisplay);
         classListView.setAdapter(classAdapter);
 
-        Intent intent = getIntent();
-
-        classAdded = intent.getBooleanExtra("classAdded", classAdded);
-
-        if(classAdded=true) {
-
-            //Populating database with class data fields
-            Class newClass = new Class();
-            newClass.name = intent.getStringExtra("className");
-
-
-            long index = db.classDao().insert(newClass);
-            Log.d("position","Index = " + index);
-
-
-        }*/
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +69,9 @@ public class ViewClasses extends AppCompatActivity {
 
         });
 
-        //updateClassArrays();
+        updateClassArrays();
+
+
     }//End of onCreate
 
     private void updateClassArrays(){
@@ -97,12 +79,18 @@ public class ViewClasses extends AppCompatActivity {
         classCount = classList.size();
         Class currentClass;
 
+        classes = new String[10];
+        classDisplay = new String[10];
+        for(int i=0;i<10;i++) {
+            classes[i] = "Class Test";
+            classDisplay[i] = "";
+        }
+
         if (classCount !=0) {
             for (int i = 0; i < classCount; i++) {
                 currentClass = classList.get(i);
-                String str = String.valueOf(currentClass.id);
-                str += currentClass.getClassName();
-                classes[i] = str;
+                classes[i] = currentClass.getClassName();
+                classDisplay[i] = currentClass.getClassName();
             }
         }
     }

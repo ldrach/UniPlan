@@ -15,9 +15,7 @@ import java.util.Date;
 @Entity(tableName = "class")
 public class Class {
 
-    //cid = class id
-    @PrimaryKey
-    public int cid;
+    @PrimaryKey(autoGenerate = true)
 
     @ColumnInfo(name = "id")
     public int id;
@@ -30,8 +28,8 @@ public class Class {
 
 
     //Day 1 Start
-    //@ColumnInfo(name = "day1S")
-    //public Date day1S;
+    @ColumnInfo(name = "day1S")
+    public int day1S;
 
     //Day 1 End
     @ColumnInfo(name = "day1E")
@@ -61,16 +59,17 @@ public class Class {
     @ColumnInfo(name = "day5E")
     public int day5E;
 
-    public String displayClass(){
-        return name;
-    }
-
-    public int getClassId(){
+    public int getClassId() {
         return id;
     }
 
-    public String getClassName(){
+    public String getClassName() {
         return name;
+    }
+
+    public String getClassRoomNum()
+    {
+        return roomNum;
     }
 
 }

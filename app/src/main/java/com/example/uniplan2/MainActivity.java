@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int taskCount;
     private String taskAdded;
+    private String classAdded;
 
     private int day;
     private int month;
@@ -78,10 +79,12 @@ public class MainActivity extends AppCompatActivity {
         tasksAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, taskDisplay);
         taskListView.setAdapter(tasksAdapter);
 
+
+        //~~~~~~~~~~~~~~Retrieves intent that started the activity. ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        //Here we determine whether a class was just added or a task was just added, or neither.
         Intent intent = getIntent();
 
-
-        //Set task count
+        //Case 1: A task has been added, and taskAdded contains "t"
         taskAdded = intent.getStringExtra("taskAdded");
         if((taskAdded != null) && taskAdded.equalsIgnoreCase("t")) {
             //setIdFromZero();
@@ -96,8 +99,29 @@ public class MainActivity extends AppCompatActivity {
             task.date = "" + year + "/" + month + "/" + day;
 
             long index = db.taskDao().insert(task);
-            Log.d("position","Index = " + index);
 
+
+        }
+        //Case 2: A class has been added, and classAdded contains "t"
+        classAdded = intent.getStringExtra("classAdded");
+        if((classAdded != null) && classAdded.equalsIgnoreCase("t")) {
+            //Populating database with class data fields
+            Class classObject = new Class();
+            classObject.name = intent.getStringExtra("className");
+
+
+            db.classDao().insert(classObject);
+
+            /*task.id = taskCount;
+            task.notes = intent.getStringExtra("notes");
+            year = intent.getIntExtra("year", 0);
+            month = intent.getIntExtra("month", 0);
+            day = intent.getIntExtra("day", 0);
+            task.date = "" + year + "/" + month + "/" + day;
+
+            long index = db.taskDao().insert(task);
+
+*/
 
         }
 
@@ -136,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                                            int position, long id) {
                 Log.d("position","position = " +position);
                 if(taskList.size()!=0) {
-                    db.taskDao().delete(taskList.get(position));
+                     db.taskDao().delete(taskList.get(position));
                     //backgroundTask bgt = new backgroundTask();
                     //bgt.execute();
                     Toast.makeText(MainActivity.this, "Task Removed", Toast.LENGTH_LONG).show();
@@ -146,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Nothing To Remove", Toast.LENGTH_LONG).show();
                 return true;
             }
-
         });
 
     }//End of onCreate method
