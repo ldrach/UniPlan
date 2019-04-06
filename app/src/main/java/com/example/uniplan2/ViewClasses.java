@@ -6,9 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -71,6 +73,20 @@ public class ViewClasses extends AppCompatActivity {
                 Intent i = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(i);
             }
+        });
+
+        classListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                           int position, long id) {
+                Log.d("position","position = " +position);
+                Intent i = new Intent(getBaseContext(), editClass.class);
+                //Add method to get data from selected class to populate the EditClass form
+                startActivity(i);
+                return true;
+            }
+
         });
 
         //updateClassArrays();
