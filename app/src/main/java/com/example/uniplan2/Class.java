@@ -28,8 +28,6 @@ public class Class {
     @ColumnInfo(name = "roomNum")
     public String roomNum;
 
-    @ColumnInfo(name = "color")
-    public String color;
 
     //Day 1 Start
     //@ColumnInfo(name = "day1S")
@@ -62,5 +60,17 @@ public class Class {
 
     @ColumnInfo(name = "day5E")
     public int day5E;
+
+    public String displayClass(){
+        return name;
+    }
+
+    public int getClassId(){
+        return id;
+    }
+
+    public String getClassName(){
+        return name;
+    }
 
 }

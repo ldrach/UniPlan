@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar mTopToolbar;
 
 
+
     public List<Task> taskList;
 
 
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         //updateTaskArrays();
 
         Intent intent = getIntent();
+
 
         //Set task count
         taskAdded = intent.getStringExtra("taskAdded");
@@ -149,6 +151,10 @@ public class MainActivity extends AppCompatActivity {
                     bgt.execute();
                     Toast.makeText(MainActivity.this, "Task Removed", Toast.LENGTH_LONG).show();
                     updateTaskArrays();
+                db.taskDao().delete(taskList.get(position));
+               /* backgroundTask bgt = new backgroundTask();
+                bgt.execute();*/
+                Toast.makeText(MainActivity.this, "Task Removed", Toast.LENGTH_LONG).show();
 
                 }else
                     Toast.makeText(MainActivity.this, "Nothing To Remove", Toast.LENGTH_LONG).show();
@@ -243,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Integer doInBackground(Integer... integers) {
-            updateTaskArrays();
+            //updateTaskArrays();
             return null;
         }
 
@@ -263,8 +269,8 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Integer integer) {
             super.onPostExecute(integer);
 
-            tasksAdapter.notifyDataSetChanged();
-            taskListView.setAdapter(tasksAdapter);
+            //tasksAdapter.notifyDataSetChanged();
+           // taskListView.setAdapter(tasksAdapter);
         }
 
     }
@@ -301,6 +307,7 @@ public class MainActivity extends AppCompatActivity {
 
         else if (id == R.id.menu_classes){
             Intent i = new Intent(getBaseContext(), ViewClasses.class);
+            //i.putExtra("className", className);
             startActivity(i);
             return true;
         }
