@@ -81,7 +81,7 @@ public class ViewClasses extends AppCompatActivity {
 
     }//End of onCreate
 
-    /*private void updateClassArrays(){
+    private void updateClassArrays(){
         classList = db.classDao().getAll();
         classCount = classList.size();
         Class currentClass;
@@ -100,5 +100,5 @@ public class ViewClasses extends AppCompatActivity {
                 classDisplay[i] = currentClass.getClassName();
             }
         }
-    }*/
+    }
 }
