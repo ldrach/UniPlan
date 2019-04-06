@@ -77,16 +77,6 @@ public class MainActivity extends AppCompatActivity {
 
         tasksAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, taskDisplay);
         taskListView.setAdapter(tasksAdapter);
-          /*
-        !!!!!!!!!!!!!!!! NEED TO RESTORE PREVIOUS STATE OF taskCount and instance of database here,
-        AFTER TASK COUNT IS INITIALIZED TO 0, OTHERWISE taskDates WILL ALWAYS BE EMPTY AND NO TASKS
-        WILL APPEAR ON MAIN PAGE
-         */
-
-
-
-
-        //updateTaskArrays();
 
         Intent intent = getIntent();
 
@@ -147,14 +137,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("position","position = " +position);
                 if(taskList.size()!=0) {
                     db.taskDao().delete(taskList.get(position));
-                    backgroundTask bgt = new backgroundTask();
-                    bgt.execute();
+                    //backgroundTask bgt = new backgroundTask();
+                    //bgt.execute();
                     Toast.makeText(MainActivity.this, "Task Removed", Toast.LENGTH_LONG).show();
                     updateTaskArrays();
-                db.taskDao().delete(taskList.get(position));
-               /* backgroundTask bgt = new backgroundTask();
-                bgt.execute();*/
-                Toast.makeText(MainActivity.this, "Task Removed", Toast.LENGTH_LONG).show();
 
                 }else
                     Toast.makeText(MainActivity.this, "Nothing To Remove", Toast.LENGTH_LONG).show();
@@ -193,6 +179,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }else
             taskDisplay[0] = "";
+        tasksAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, taskDisplay);
+        taskListView.setAdapter(tasksAdapter);
     }
     //Sorts arrays, given the date in the taskDates array
     private void sortArraysByDate(){
