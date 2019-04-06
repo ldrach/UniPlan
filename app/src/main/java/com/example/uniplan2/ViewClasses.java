@@ -2,15 +2,13 @@ package com.example.uniplan2;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -23,6 +21,7 @@ public class ViewClasses extends AppCompatActivity {
     public String[] classDisplay;
     public List<Class> classList;
     public int classCount;
+    private Toolbar mTopToolbar;
 
     Button backBtn;
 
@@ -35,6 +34,12 @@ public class ViewClasses extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_view_classes);
+
+
+        mTopToolbar = findViewById(R.id.basic_toolbar);
+        setSupportActionBar(mTopToolbar);
+
+
 
         backBtn = findViewById(R.id.viewClassesBackButton);
         classListView = findViewById(R.id.ClassList);
@@ -57,7 +62,7 @@ public class ViewClasses extends AppCompatActivity {
             }
         });
 
-        classListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+       /* classListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view,
@@ -69,14 +74,14 @@ public class ViewClasses extends AppCompatActivity {
                 return true;
             }
 
-        });
+        });*/
 
         updateClassArrays();
 
 
     }//End of onCreate
 
-    private void updateClassArrays(){
+    /*private void updateClassArrays(){
         classList = db.classDao().getAll();
         classCount = classList.size();
         Class currentClass;
@@ -95,5 +100,5 @@ public class ViewClasses extends AppCompatActivity {
                 classDisplay[i] = currentClass.getClassName();
             }
         }
-    }
+    }*/
 }

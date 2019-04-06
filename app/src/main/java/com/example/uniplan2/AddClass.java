@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -26,7 +27,10 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
             toMin4, toMin5;
     private int spinner1, spinner2, spinner3, spinner4, spinner5;
     public String room1, room2, room3, room4, room5;
+
+    private Toolbar mTopToolbar;
     public String classAdded;
+
 
 
 
@@ -37,7 +41,12 @@ public class AddClass extends AppCompatActivity implements View.OnClickListener{
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_add_class);
 
+
+        mTopToolbar = findViewById(R.id.basic_toolbar);
+        setSupportActionBar(mTopToolbar);
+
         classAdded = "f";
+
 
         className = findViewById(R.id.classNameEditText);
 

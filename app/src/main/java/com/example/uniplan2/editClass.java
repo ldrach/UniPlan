@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,12 +28,16 @@ public class editClass extends AppCompatActivity implements View.OnClickListener
     private int spinner1, spinner2, spinner3, spinner4, spinner5;
     public String room1, room2, room3, room4, room5;
     public boolean classAdded;
+    private Toolbar mTopToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_edit_class);
+
+        mTopToolbar = findViewById(R.id.basic_toolbar);
+        setSupportActionBar(mTopToolbar);
 
         classAdded = false;
 

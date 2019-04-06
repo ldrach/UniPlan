@@ -16,10 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
 
-        mTopToolbar = findViewById(R.id.my_toolbar);
+        mTopToolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(mTopToolbar);
 
         taskListView = findViewById(R.id.taskListView);
@@ -300,8 +297,9 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_calendar) {
-            Intent i = new Intent(getBaseContext(), calendar.class);
-            startActivity(i);
+//            Intent i = new Intent(getBaseContext(), calendar.class);
+//            startActivity(i);
+            Toast.makeText(getBaseContext(),"Under Construction!", Toast.LENGTH_SHORT).show();
             return true;
         }
 
