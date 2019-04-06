@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import java.util.Calendar;
 
@@ -19,12 +20,15 @@ public class AddTask extends AppCompatActivity implements View.OnClickListener {
     public EditText txtDate;
     private int mYear, mMonth, mDay;
     private int dayInt, monthInt, yearInt;
+    public String[] classSelect;
+    public Spinner classSpinner;
 
     //Values to store in task table
     public String taskName;
     public String notes;
     public int id;
     private String taskAdded;
+
 
 
 
@@ -37,7 +41,7 @@ public class AddTask extends AppCompatActivity implements View.OnClickListener {
         final EditText taskNameEditText =  findViewById(R.id.taskNameEditText);
         final EditText taskDescriptionEditText =  findViewById(R.id.taskDescriptionEditText);
 
-
+        classSpinner = findViewById(R.id.classSpinner);
         btnDatePicker=findViewById(R.id.dateButton);
         txtDate=findViewById(R.id.dueDateEdit);
 
