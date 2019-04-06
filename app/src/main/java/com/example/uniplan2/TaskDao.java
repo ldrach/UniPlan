@@ -15,11 +15,11 @@ public interface TaskDao {
     @Query("SELECT * FROM task")
     List<Task> getAll();
 
-    @Query("SELECT * FROM task WHERE id = :taskID")
+    @Query("SELECT * FROM task WHERE id = :taskID LIMIT 1")
     Task findTask(int taskID);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Task task);
+    long insert(Task task);
 
     @Update
     void updateTask(Task task);
