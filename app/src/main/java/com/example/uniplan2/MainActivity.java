@@ -157,13 +157,22 @@ public class MainActivity extends AppCompatActivity {
                                            int position, long id) {
                 Log.d("position","position = " +position);
                 if(taskList.size()!=0) {
-                     db.taskDao().delete(taskList.get(position));
-                    //backgroundTask bgt = new backgroundTask();
-                    //bgt.execute();
-                    Toast.makeText(MainActivity.this, "Task Removed", Toast.LENGTH_LONG).show();
-                    updateTaskArrays();
 
-                }else
+                    // Get task to be deleted
+                    Task toDelete = taskList.get(position);
+
+                    // Create DeleteTask and set callback
+                    DeleteTask bgt = new DeleteTask(db);
+                    bgt.setOnComplete(new DeleteTask.OnTaskCompleted() {
+                        @Override
+                        public void onTaskCompleted() {
+                            updateTaskArrays();
+                        }
+                    });
+
+                    // Execute task
+                    bgt.execute(toDelete);
+                } else
                     Toast.makeText(MainActivity.this, "Nothing To Remove", Toast.LENGTH_LONG).show();
                 return true;
             }
@@ -253,34 +262,46 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class backgroundTask extends AsyncTask<Integer, String, Integer> {
+    public static class DeleteTask extends AsyncTask<Task, Void, Void> {
 
-        @Override
-        protected Integer doInBackground(Integer... integers) {
-            //updateTaskArrays();
-            return null;
+        interface OnTaskCompleted {
+            void onTaskCompleted();
+        }
+
+        Database db;
+        OnTaskCompleted callback;
+
+        DeleteTask(Database db) {
+            this.db = db;
+        }
+
+        void setOnComplete(OnTaskCompleted callback) {
+            this.callback = callback;
         }
 
         @Override
-        protected void onProgressUpdate(String... values) {
-            super.onProgressUpdate(values);
-
+        protected Void doInBackground(Task... tasks) {
+            TaskDao dao = db.taskDao();
+            for (Task task : tasks) {
+                dao.delete(task);
+            }
+            return null;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
+            Log.d("DeleteTask", "Beginning delete task");
         }
 
         @Override
-        protected void onPostExecute(Integer integer) {
-            super.onPostExecute(integer);
+        protected void onPostExecute(Void params) {
+            super.onPostExecute(params);
+            Log.d("DeleteTask", "Finished delete task");
 
-            //tasksAdapter.notifyDataSetChanged();
-           // taskListView.setAdapter(tasksAdapter);
+            if (callback != null)
+                callback.onTaskCompleted();
         }
-
     }
 
 
